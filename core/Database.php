@@ -4,6 +4,7 @@
 namespace core;
 
 use PDO;
+use PDOException;
 
 class Database
 {
@@ -13,10 +14,15 @@ class Database
 
     public function __construct($config)
     {
-        $dsn = 'mysql:' . http_build_query($config, '', ';');
-        $this->connection = new PDO($dsn, options: [
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ]);
+        try {
+            $dsn = 'mysql:host=' . $config['host'] . ';port=' . $config['port'] . ';dbname=' . $config['dbname'] . ';charset=' . $config['charset'];
+            $this->connection = new PDO($dsn, $config['user'], $config['password'], [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]);
+        } catch (PDOException $e) {
+            die('Connection failed: ' . $e->getMessage());
+        }
     }
 
     public function query($query, $params = [])
