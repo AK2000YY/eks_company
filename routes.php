@@ -1,7 +1,7 @@
 <?php
 
 //test
-$router->get('/','index.php')->only('admin');
+$router->get('/','index.php')->only('delegate');
 //customer
 $router->post('/customer', 'customer/store.php')->only('delegate');
 $router->get('/customer', 'customer/index.php');

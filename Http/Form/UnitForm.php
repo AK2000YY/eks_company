@@ -16,7 +16,7 @@ class UnitForm
     public function __construct($attributes)
     {
         $this->attributes = $attributes;
-        if (! Validator::string($this->attributes['unit']))
+        if (! Validator::string($this->attributes['type']))
             $this->errors['unit'] = 'put a valid unit !';
     }
 
@@ -43,18 +43,18 @@ class UnitForm
         return $units;
     }
 
-    public function addUnit($attributes)
+    public function addUnit()
     {
         $db = App::resolve(Database::class);
         $unit = $db->query("select id from units where type=:type", [
-            ':type' => $attributes['type']
+            ':type' => $this->attributes['type']
         ])->find();
         if (! $unit) {
             $db->query('insert into units(type) values(:type)', [
-                ':type' => $attributes['type']
+                ':type' => $this->attributes['type']
             ]);
             $unit = $db->query("select id from units where type=:type", [
-                ':type' => $attributes['type']
+                ':type' => $this->attributes['type']
             ])->find();
         }
         return $unit['id'];

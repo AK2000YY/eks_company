@@ -13,8 +13,8 @@ class Delegate
         try {
             $token = $_SERVER['HTTP_AUTHORIZATION'];
             $decode = verifyToken($token, $this->secretKey);
-            if ($decode->account_type === 'admin')
-                return $decode->id;
+            if ($decode['account_type'] === 'admin' || $decode['account_type'] === 'delegate')
+                return $decode['id'];
             wrong("you can't do that !");
         } catch (Exception $exception) {
             wrong("you can't do that !");

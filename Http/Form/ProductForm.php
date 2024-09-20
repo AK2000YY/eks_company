@@ -35,7 +35,7 @@ class ProductForm
         $db->query('select * from products where id=:id',[
             ':id' => $attributes['id']
             ])->findOrFail(['product'=>"this product don't found"]);
-        $unitId = (new UnitForm)->addUnit(['type'=>$attributes['unit']]);
+        $unitId = (new UnitForm(['type'=>$attributes['unit']]))->addUnit(['type'=>$attributes['unit']]);
         $db->query('update products set name=:name,code=:code,quantity=:quantity,price=:price,unit_id=:unit_id,user_id=:user_id where id=:id',[
             ':id' => $attributes['id'],
             ':name'=>$attributes['name'],
@@ -56,7 +56,7 @@ class ProductForm
             ':code' => $attributes['code']
         ])->find();
         if (! $product) {
-            $unitId = (new UnitForm)->addUnit(['type' => $attributes['unit']]);
+            $unitId = (new UnitForm(['type'=>$attributes['unit']]))->addUnit(['type' => $attributes['unit']]);
             $db->query('insert into products(name,code,quantity,price,unit_id,user_id)
             values(:name,:code,:quantity,:price,:unit_id,:user_id)', [
                 ':name' => $attributes['name'],
