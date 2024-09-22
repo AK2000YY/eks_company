@@ -1,11 +1,9 @@
 <?php
 
-use core\Delete;
+use Http\Form\CustomerForm;
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-(new Delete)->deleteUser([
-    'id' => $data['id']
-]);
+(new CustomerForm(['id' => $data['id']]))->delete();
 
 accept();

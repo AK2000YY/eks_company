@@ -12,9 +12,7 @@ $form = ProductForm::validate($attributes = [
     "price" => $data['price'] ?? 0
 ]);
 
-$productAdd = $form->addProduct($attributes);
-
-if (! $productAdd)
+if (! $form->add())
     $form->error('code or name', 'code or name is used')
         ->throw();
 

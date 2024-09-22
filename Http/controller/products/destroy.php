@@ -1,11 +1,9 @@
 <?php
 
-use core\Delete;
+use Http\Form\ProductForm;
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-(new Delete)->deleteProduct([
-    'id'=>$data['id']
-]);
+(new ProductForm(['id'=>$data['id']]))->delete();
 
 accept();

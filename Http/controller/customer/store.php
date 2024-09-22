@@ -1,6 +1,5 @@
 <?php
 
-use core\Authentication;
 use Http\Form\CustomerForm;
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -14,16 +13,7 @@ $form = CustomerForm::validate($attributes = [
     'administrator_phone' => $data['administrator_phone']
 ]);
 
-$signedIn = (new Authentication())->registerCustomer(
-    $attributes['username'],
-    $attributes['account_type'],
-    $attributes['address'],
-    $attributes['phone'],
-    $attributes['administrator_name'],
-    $attributes['administrator_phone'],
-);
-
-if (! $signedIn) {
+if (! $form->add()) {
     $form->error(
         'username',
         'username are used'

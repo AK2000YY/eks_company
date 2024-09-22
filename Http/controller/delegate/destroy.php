@@ -1,11 +1,9 @@
 <?php
 
-use core\Delete;
+use Http\Form\DelegateForm;
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-(new Delete)->deleteUser([
-    'id' => $data['id']
-]);
+(new DelegateForm(['id' => $data['id']]))->delete();
 
 accept();

@@ -14,7 +14,7 @@ $form = ProductForm::validate($attributes = [
     "user_id" => $id
 ]);
 
-$updateProduct = $form->updateProduct($attributes);
+$updateProduct = $form->update($attributes);
 
 if(! $updateProduct)
     $form->error('code or name', 'code or name is used')

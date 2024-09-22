@@ -2,4 +2,4 @@
 
 use Http\Form\UnitForm;
 
-accept((new UnitForm)->show());
+accept((new UnitForm())->show());

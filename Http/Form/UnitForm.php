@@ -13,11 +13,60 @@ class UnitForm
     protected $errors = [];
     protected $attributes = [];
 
-    public function __construct($attributes)
+    public function __construct($attributes = [])
     {
         $this->attributes = $attributes;
-        if (! Validator::string($this->attributes['type']))
+        if (isset($this->attributes['type']) && ! Validator::string($this->attributes['type']))
             $this->errors['unit'] = 'put a valid unit !';
+    }
+
+    public function add()
+    {
+        $db = App::resolve(Database::class);
+        $user = $db->query('select * from units where type = :type', [
+            ':type' => $this->attributes['type']
+        ])->find();
+
+        if (! $user) {
+            $db->query('insert into 
+                units (type) 
+                values(:type)', [
+                ':type' => $this->attributes['type']
+            ]);
+
+            return true;
+        }
+        return false;
+    }
+
+    public function update()
+    {
+        $db = App::resolve(Database::class);
+        $unit = $db->query('select * from units where id=:id', [
+            ':id' => $this->attributes['id']
+        ])->findOrFail(['unit' => "don't found this unit"]);
+        $can = $db->query("select * from units where id!=:id and type=:type", [
+            ':id' => $this->attributes['id'],
+            ':type' => $this->attributes['type'],
+        ])->find();
+        if ($unit && ! $can) {
+            $db->query('update units set type=:type where id=:id', [
+                ':id' => $this->attributes['id'],
+                ':type' => $this->attributes['type']
+            ]);
+            return true;
+        }
+        return false;
+    }
+    public function delete()
+    {
+        $db = App::resolve(Database::class);
+        $db->query('select * from units where id=:id', [
+            ':id' => $this->attributes['id']
+        ])->findOrFail(['unit' => "don't find this unit"]);
+        $db->query('delete from units where id=:id', [
+            ':id' => $this->attributes['id']
+        ]);
     }
 
     public static function validate($attributes)
@@ -43,7 +92,7 @@ class UnitForm
         return $units;
     }
 
-    public function addUnit()
+    public function getIdUnit()
     {
         $db = App::resolve(Database::class);
         $unit = $db->query("select id from units where type=:type", [

@@ -1,6 +1,5 @@
 <?php
 
-use core\Update;
 use Http\Form\CustomerForm;
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -12,9 +11,7 @@ $form = CustomerForm::validate($attributes = [
     //'password' => password_hash(),
 ]);
 
-$updateUser = (new Update)->updateCustomer($attributes);
-
-if(! $updateUser) {
+if(! $form->update()) {
     $form->error(
         'username',
         'username are used'
