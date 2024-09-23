@@ -32,6 +32,11 @@ class Database
         return $this;
     }
 
+    public function lastIndex()
+    {
+        return $this->connection->lastInsertId();
+    }
+
     public function find()
     {
         return $this->statement->fetch();

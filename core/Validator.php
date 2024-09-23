@@ -16,8 +16,32 @@ class Validator
         return in_array($value, $types);
     }
 
+    public static function invoiceType($value)
+    {
+        $types = ['sell', 'buy'];
+        return in_array($value, $types);
+    }
+
     public static function number($value)
     {
         return is_numeric($value);
+    }
+
+    public static function invoiceItems($items)
+    {
+        if (! is_array($items)) return false;
+        foreach ($items as $item) {
+            if (
+                isset($item['name'], $item['quantity'], $item['price']) &&
+                static::string($item['name']) &&
+                static::number($item['quantity']) &&
+                static::number($item['price'])
+
+            )
+                continue;
+            else
+                return false;
+        }
+        return true;
     }
 }

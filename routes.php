@@ -28,7 +28,7 @@ $router->get('/unit', 'units/index.php')->only('delegate');
 $router->patch('/unit', 'units/update.php')->only('admin');
 $router->delete('/unit', 'units/destroy.php')->only('admin');
 //invoice
-$router->post('/invoice', 'invoices/store.php')->only('delegate');
+$router->post('/invoice', 'invoices/store.php')->only('admin');
 $router->get('/invoice', 'invoices/index.php')->only('delegate');
 $router->patch('/invoice', 'invoices/update.php')->only('admin');
 $router->delete('/invoice', 'invoices/destroy.php')->only('admin');
