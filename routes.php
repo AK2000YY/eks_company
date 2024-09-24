@@ -18,7 +18,7 @@ $router->get('/delegate', 'delegate/index.php')->only('delegate');
 $router->patch('/delegate', 'delegate/update.php')->only('admin');
 $router->delete('/delegate', 'delegate/destroy.php')->only('admin');
 //product
-$router->post('/product', 'products/store.php')->only('delegate');
+$router->post('/product', 'products/store.php')->only('admin');
 $router->get('/product', 'products/index.php')->only('delegate');
 $router->patch('/product', 'products/update.php')->only('admin');
 $router->delete('/product', 'products/destroy.php')->only('admin');
@@ -28,7 +28,8 @@ $router->get('/unit', 'units/index.php')->only('delegate');
 $router->patch('/unit', 'units/update.php')->only('admin');
 $router->delete('/unit', 'units/destroy.php')->only('admin');
 //invoice
-$router->post('/invoice', 'invoices/store.php')->only('admin');
-$router->get('/invoice', 'invoices/index.php')->only('delegate');
-$router->patch('/invoice', 'invoices/update.php')->only('admin');
-$router->delete('/invoice', 'invoices/destroy.php')->only('admin');
+$router->get('/invoices', 'invoices/index.php')->only('delegate');
+$router->post('/invoice', 'invoices/store.php')->only('delegate');
+$router->get('/invoice', 'invoices/show.php')->only('delegate');
+// $router->patch('/invoice', 'invoices/update.php')->only('admin');
+// $router->delete('/invoice', 'invoices/destroy.php')->only('admin');
